@@ -2,39 +2,12 @@
 class Employees {
     private $pdo;
     
-    function __construct($dbc) {
-
-        //set db settings
-        $type = $dbc['type'];
-        $host = $dbc['host'];
-        $db   = $dbc['db'];
-        $user = $dbc['user'];
-        $pass = $dbc['pass'];
-        $charset = $dbc['charset'];
-
-        //create dsn
-        $dsn = "$type:host=$host;dbname=$db;charset=$charset";
-
-        //set options
-        $options = [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            //PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-        ];
-
-        //connect to db
-        try {
-            $this->pdo = new PDO($dsn, $user, $pass, $options);
-        } catch (\PDOException $e) {
-            $this->error($e);
-        }
-
+    function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
     private function error($e) {
         echo "Error";
-        //throw new \PDOException($e->getMessage(), (int)$e->getCode());
         echo $e->getMessage().$e->getCode();
         exit();
     }
